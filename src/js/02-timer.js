@@ -1,18 +1,18 @@
-import flatpickr from "flatpickr";
+import flatpickr from 'flatpickr';
 
-import "flatpickr/dist/flatpickr.min.css";
+import 'flatpickr/dist/flatpickr.min.css';
 
-import Notiflix from "notiflix";
+import Notiflix from 'notiflix';
 
-refs = {
-  startButton: document.querySelector("button[data-start]"),
-  daysEl: document.querySelector("span[data-days]"),
-  hoursEl: document.querySelector("span[data-hours]"),
-  minutesEl: document.querySelector("span[data-minutes]"),
-  secondsEl: document.querySelector("span[data-seconds]"),
+const refs = {
+  startButton: document.querySelector('button[data-start]'),
+  daysEl: document.querySelector('span[data-days]'),
+  hoursEl: document.querySelector('span[data-hours]'),
+  minutesEl: document.querySelector('span[data-minutes]'),
+  secondsEl: document.querySelector('span[data-seconds]'),
 };
 
-refs.startButton.setAttribute("disabled", true);
+refs.startButton.setAttribute('disabled', true);
 
 let selectedDate = null;
 
@@ -23,16 +23,16 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     if (Date.now() > selectedDates[0]) {
-      Notiflix.Notify.failure("Please choose a date in the future");
-      refs.startButton.setAttribute("disabled", true);
+      Notiflix.Notify.failure('Please choose a date in the future');
+      refs.startButton.setAttribute('disabled', true);
     } else {
-      refs.startButton.removeAttribute("disabled");
+      refs.startButton.removeAttribute('disabled');
     }
     selectedDate = selectedDates[0];
   },
 };
 
-flatpickr("input#datetime-picker", options);
+flatpickr('input#datetime-picker', options);
 
 class Timer {
   constructor({ onTimer }) {
@@ -47,7 +47,7 @@ class Timer {
       const time = this.convertMs(remainingTime);
       this.onTimer(time);
 
-      refs.startButton.setAttribute("disabled", true);
+      refs.startButton.setAttribute('disabled', true);
       if (remainingTime < 1000) {
         this.stop();
       }
@@ -82,7 +82,7 @@ class Timer {
   }
 
   addLeadingZero(value) {
-    return String(value).padStart(2, "0");
+    return String(value).padStart(2, '0');
   }
 }
 
@@ -90,7 +90,7 @@ const timer = new Timer({
   onTimer: updateClockFace,
 });
 
-refs.startButton.addEventListener("click", timer.start.bind(timer));
+refs.startButton.addEventListener('click', timer.start.bind(timer));
 
 function updateClockFace({ days, hours, minutes, seconds }) {
   refs.daysEl.textContent = days;
